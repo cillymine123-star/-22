@@ -1,0 +1,942 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>เกมการแต่งประโยค ป.2</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --pink: #f65b9d;
+  --blue: #328cea;
+  --green: #31b36f;
+  --yellow: #ffbb42;
+  --ink: #283451;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Kanit', Tahoma, sans-serif;
+  color: var(--ink);
+  background: linear-gradient(
+    135deg,
+    #b7edff,
+    #ffe1f0 55%,
+    #fff2bc
+  );
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+button:focus-visible {
+  outline: 4px solid #544ac2;
+  outline-offset: 3px;
+}
+
+.shell {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px 15px 35px;
+}
+
+/* ชื่อเกม */
+
+.header {
+  text-align: center;
+}
+
+.logo {
+  font-size: clamp(34px, 6vw, 68px);
+  font-weight: 800;
+  color: var(--pink);
+  line-height: 1.4;
+  text-shadow: 3px 3px #fff;
+}
+
+.logo span {
+  color: var(--blue);
+}
+
+.byline {
+  display: inline-block;
+  background: white;
+  border: 3px solid #ffd0e4;
+  border-radius: 40px;
+  padding: 8px 20px;
+  margin: 12px 0 18px;
+  font-weight: 600;
+  font-size: clamp(15px, 2.3vw, 22px);
+}
+
+/* พื้นที่เกม */
+
+.scene {
+  position: relative;
+  min-height: 580px;
+  overflow: hidden;
+  border: 5px solid white;
+  border-radius: 32px;
+  background: linear-gradient(
+    160deg,
+    #e8fcff,
+    #fff8e2
+  );
+  box-shadow: 0 12px 30px #53627c35;
+}
+
+.homegrid {
+  display: grid;
+  grid-template-columns: 42% 58%;
+  min-height: 580px;
+  align-items: stretch;
+}
+
+/* ภาพครูและกล่องคำพูด */
+
+.teacher-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 25px 15px 0;
+  gap: 18px;
+  min-width: 0;
+}
+
+/* กล่องคำพูดไม่ทับหัวครู */
+
+.intro-bubble {
+  position: relative;
+  width: 100%;
+  z-index: 2;
+  padding: 15px 13px;
+  background: white;
+  border: 3px solid #b4e1fe;
+  border-radius: 25px;
+  box-shadow: 0 5px #d0efff;
+  text-align: center;
+  font-size: clamp(16px, 2vw, 21px);
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.teacher {
+  display: block;
+  position: static;
+  width: 90%;
+  max-width: 380px;
+  max-height: 390px;
+  object-fit: contain;
+  object-position: bottom center;
+  margin-top: auto;
+  filter: drop-shadow(0 6px 5px #8699b855);
+}
+
+/* เมนูหลัก */
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 17px;
+  padding: 35px 30px;
+}
+
+.welcome-card {
+  text-align: center;
+  background: #fffdf2;
+  border: 3px solid #ffe1a1;
+  border-radius: 25px;
+  padding: 22px 15px;
+  font-size: 25px;
+  font-weight: 700;
+  color: #b73887;
+}
+
+.welcome-card p {
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 500;
+  color: #46566e;
+}
+
+.bigbtn {
+  border: 4px solid white;
+  border-radius: 24px;
+  color: white;
+  font-size: clamp(21px, 3vw, 30px);
+  font-weight: 800;
+  padding: 15px;
+  box-shadow: 0 7px 0 #5e668833;
+  transition: transform .15s;
+}
+
+.bigbtn:hover {
+  transform: translateY(-3px);
+}
+
+.bigbtn:active {
+  transform: translateY(3px);
+}
+
+.green {
+  background: linear-gradient(#77df64, #23ae61);
+}
+
+.blue {
+  background: linear-gradient(#75caff, #2585e5);
+}
+
+.yellow {
+  background: linear-gradient(#ffd96b, #ffa631);
+}
+
+.welcome-small {
+  background: #fff8e9;
+  border-radius: 16px;
+  text-align: center;
+  padding: 14px;
+  color: #68447b;
+  font-weight: 700;
+}
+
+/* หน้าคำถาม */
+
+.panel {
+  max-width: 840px;
+  margin: 55px auto 35px;
+  padding: 35px;
+  background: #fffefa;
+  border: 4px solid white;
+  border-radius: 28px;
+  box-shadow: 0 8px 24px #53627c30;
+}
+
+h2 {
+  margin: 0 0 15px;
+  color: #ee438e;
+  font-size: clamp(26px, 4vw, 36px);
+}
+
+p {
+  font-size: 19px;
+  line-height: 1.8;
+}
+
+.back {
+  border: 0;
+  border-radius: 30px;
+  background: #e8eefe;
+  color: #344e89;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.rule {
+  background: #edf9ff;
+  border-radius: 18px;
+  padding: 22px;
+  font-size: 20px;
+  line-height: 2;
+}
+
+.topline {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.progress {
+  height: 15px;
+  background: #e8eefa;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 18px 0;
+}
+
+.bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #50dba0, #29a9ee);
+  transition: width .3s;
+}
+
+.instruction {
+  text-align: center;
+  font-weight: 700;
+  color: #50648b;
+}
+
+.prompt {
+  margin: 20px 0;
+  padding: 35px 15px;
+  border: 3px solid #ffcd84;
+  border-radius: 20px;
+  background: #fff4dc;
+  text-align: center;
+  font-size: clamp(32px, 6vw, 54px);
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.option {
+  min-height: 85px;
+  padding: 15px;
+  background: #ffebdf;
+  border: 3px solid #ffd0af;
+  border-radius: 20px;
+  color: #29334a;
+  font-size: clamp(18px, 2.6vw, 26px);
+  font-weight: 800;
+}
+
+.option:hover:not(:disabled) {
+  background: #ffdaed;
+  border-color: #ffa8cc;
+}
+
+.option.correct {
+  background: #bcf0d2;
+  border-color: #2cad6f;
+}
+
+.option.wrong {
+  background: #ffd5da;
+  border-color: #ef4f65;
+}
+
+.option:disabled {
+  cursor: default;
+}
+
+.feedback {
+  margin: 20px 0 10px;
+  padding: 16px 20px;
+  background: #e8f9ef;
+  border: 2px solid #b6e6c6;
+  border-radius: 17px;
+  font-size: 19px;
+  line-height: 1.8;
+}
+
+.feedback.bad {
+  background: #fff0ef;
+  border-color: #ffd0d0;
+}
+
+.nextbtn {
+  display: block;
+  margin: 20px auto 0;
+  padding: 13px 30px;
+  border: 0;
+  border-radius: 17px;
+  background: #398be9;
+  color: white;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* หน้าผลคะแนน */
+
+.result {
+  text-align: center;
+}
+
+.emoji {
+  font-size: 60px;
+}
+
+.scorebig {
+  color: #e64f99;
+  font-size: 65px;
+  font-weight: 800;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #586b87;
+}
+
+/* รองรับโทรศัพท์มือถือ */
+
+@media (max-width: 700px) {
+
+  .shell {
+    padding: 10px 8px;
+  }
+
+  .scene {
+    min-height: unset;
+  }
+
+  .homegrid {
+    grid-template-columns: 1fr;
+    min-height: unset;
+  }
+
+  .teacher-zone {
+    min-height: auto;
+    padding: 16px 12px 0;
+    gap: 12px;
+  }
+
+  .intro-bubble {
+    position: static;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .teacher {
+    width: 75%;
+    max-width: 270px;
+    max-height: 260px;
+  }
+
+  .menu {
+    padding: 15px 13px 25px;
+    gap: 12px;
+  }
+
+  .welcome-card {
+    font-size: 22px;
+    padding: 14px;
+  }
+
+  .welcome-card p {
+    font-size: 16px;
+  }
+
+  .bigbtn {
+    padding: 12px;
+    font-size: 23px;
+  }
+
+  .panel {
+    margin: 18px 5px;
+    padding: 20px 12px;
+  }
+
+  .options {
+    gap: 9px;
+  }
+
+  .option {
+    padding: 10px 5px;
+    font-size: 18px;
+    min-height: 75px;
+  }
+
+  .prompt {
+    padding: 25px 10px;
+    font-size: 34px;
+  }
+
+  .topline {
+    font-size: 15px;
+  }
+
+  .rule {
+    font-size: 17px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="shell">
+
+<header class="header">
+
+  <div class="logo">
+    เกมการ<span>แต่ง</span>ประโยค
+  </div>
+
+  <div class="byline">
+    💖 สอนโดยครูฐิติรัตน์ ปลิดทุกข์ภัย 💖
+  </div>
+
+</header>
+
+<main class="scene">
+
+<!-- หน้าหลัก -->
+
+<section id="home" class="homegrid">
+
+  <div class="teacher-zone">
+
+    <div class="intro-bubble">
+      สวัสดีค่ะเด็ก ๆ 👋
+      <br>
+      พร้อมเรียนรู้เรื่องประโยคหรือยังคะ?
+    </div>
+
+    <img
+      class="teacher"
+      src="teacher.png"
+      alt="ภาพการ์ตูนครูฐิติรัตน์"
+    >
+
+  </div>
+
+  <div class="menu">
+
+    <div class="welcome-card">
+      🌟 ภารกิจนักสืบประโยค
+
+      <p>
+        อ่านให้ดี แล้วเลือกว่าข้อความนั้น
+        เป็นประโยคหรือไม่!
+      </p>
+    </div>
+
+    <button class="bigbtn green" onclick="start()">
+      ▶ เริ่มเกม
+    </button>
+
+    <button class="bigbtn blue" onclick="show('rules')">
+      📖 วิธีเล่น
+    </button>
+
+    <div class="welcome-small">
+      🎯 6 ข้อ
+      <br>
+      ⭐ ข้อละ 10 คะแนน
+      <br>
+      🏆 คะแนนเต็ม 60 คะแนน
+    </div>
+
+  </div>
+
+</section>
+
+<!-- วิธีเล่น -->
+
+<section id="rules" class="panel hidden">
+
+  <button class="back" onclick="show('home')">
+    ← หน้าหลัก
+  </button>
+
+  <h2>📖 วิธีเล่น</h2>
+
+  <div class="rule">
+
+    👀 อ่านข้อความที่ปรากฏบนหน้าจอทีละข้อ
+
+    <br>
+
+    🟢 กด <b>เป็นประโยค</b>
+    เมื่อข้อความสื่อความหมายได้สมบูรณ์
+
+    <br>
+
+    🟠 กด <b>ไม่เป็นประโยค</b>
+    เมื่อข้อความยังสื่อความหมายไม่สมบูรณ์
+
+    <br>
+
+    💡 เกมมีทั้งหมด 6 ข้อ ข้อละ 10 คะแนน
+
+    <br>
+
+    🌈 เมื่อตอบแล้วจะมีเฉลยพร้อมคำอธิบาย
+
+  </div>
+
+  <button class="nextbtn" onclick="start()">
+    เริ่มเล่นเลย ▶
+  </button>
+
+</section>
+
+<!-- หน้าเล่นเกม -->
+
+<section id="play" class="panel hidden">
+
+  <button class="back" onclick="show('home')">
+    ← หน้าหลัก
+  </button>
+
+  <div class="topline">
+
+    <span>🎯 นักสืบประโยค</span>
+
+    <span id="count">ข้อ 1 / 6</span>
+
+    <span id="points">⭐ 0 คะแนน</span>
+
+  </div>
+
+  <div class="progress">
+    <div class="bar" id="bar"></div>
+  </div>
+
+  <p class="instruction">
+    ข้อความต่อไปนี้เป็นประโยคหรือไม่?
+  </p>
+
+  <div class="prompt" id="question"></div>
+
+  <div class="options">
+
+    <button class="option" onclick="choose(true)">
+      ✅ เป็นประโยค
+    </button>
+
+    <button class="option" onclick="choose(false)">
+      ❌ ไม่เป็นประโยค
+    </button>
+
+  </div>
+
+  <div
+    id="feedback"
+    class="feedback hidden"
+    role="status"
+    aria-live="polite">
+  </div>
+
+  <button
+    id="next"
+    class="nextbtn hidden"
+    onclick="advance()">
+    ข้อต่อไป ➜
+  </button>
+
+</section>
+
+<!-- หน้าสรุปคะแนน -->
+
+<section id="result" class="panel result hidden">
+
+  <div class="emoji">🏆🎉🌟</div>
+
+  <h2 id="resultTitle">เก่งมาก!</h2>
+
+  <div class="scorebig" id="finalScore">
+    0 / 60
+  </div>
+
+  <p id="resultMsg"></p>
+
+  <button class="bigbtn green" onclick="start()">
+    🔁 เล่นใหม่
+  </button>
+
+  <button class="bigbtn blue" onclick="show('home')">
+    🏠 หน้าหลัก
+  </button>
+
+</section>
+
+</main>
+
+<div class="footer">
+  เกมการเรียนรู้ภาษาไทย ชั้นประถมศึกษาปีที่ 2
+  <br>
+  สอนโดยครูฐิติรัตน์ ปลิดทุกข์ภัย
+</div>
+
+</div>
+
+<script>
+
+/* คำถาม 6 ข้อ ตามที่ครูกำหนด */
+
+const quiz = [
+
+  {
+    text: "นกกินหนอน",
+    sentence: true,
+    why: "บอกว่าใครทำอะไรได้ครบถ้วน จึงเป็นประโยค"
+  },
+
+  {
+    text: "หนังสือการ์ตูน",
+    sentence: false,
+    why: "เป็นกลุ่มคำที่เรียกสิ่งของ ยังไม่บอกเหตุการณ์หรือใจความที่สมบูรณ์"
+  },
+
+  {
+    text: "เด็ก ๆ วิ่งเล่น",
+    sentence: true,
+    why: "บอกว่าเด็ก ๆ ทำอะไร จึงเป็นประโยค"
+  },
+
+  {
+    text: "คุณปู่หัวเราะ",
+    sentence: true,
+    why: "บอกว่าคุณปู่ทำอะไร จึงเป็นประโยค"
+  },
+
+  {
+    text: "กระดาษห่อ",
+    sentence: false,
+    why: "ในแบบฝึกนี้ใช้เป็นกลุ่มคำเรียกสิ่งของ ยังไม่ได้สื่อใจความเป็นประโยคที่สมบูรณ์"
+  },
+
+  {
+    text: "นักกีฬา",
+    sentence: false,
+    why: "เป็นคำนามที่เรียกบุคคล ยังไม่บอกว่าเขาทำอะไร"
+  }
+
+];
+
+/* ตัวแปรเกม */
+
+let idx = 0;
+let score = 0;
+let answered = false;
+
+/* เปลี่ยนหน้าจอ */
+
+function show(id) {
+
+  const pages = [
+    "home",
+    "rules",
+    "play",
+    "result"
+  ];
+
+  pages.forEach(page => {
+
+    document.getElementById(page)
+      .classList.toggle("hidden", page !== id);
+
+  });
+
+  window.scrollTo(0, 0);
+}
+
+/* เริ่มเกม */
+
+function start() {
+
+  idx = 0;
+  score = 0;
+  answered = false;
+
+  show("play");
+
+  render();
+}
+
+/* แสดงคำถาม */
+
+function render() {
+
+  answered = false;
+
+  const item = quiz[idx];
+
+  document.getElementById("count").textContent =
+    `ข้อ ${idx + 1} / ${quiz.length}`;
+
+  document.getElementById("points").textContent =
+    `⭐ ${score} คะแนน`;
+
+  document.getElementById("bar").style.width =
+    `${idx / quiz.length * 100}%`;
+
+  document.getElementById("question").textContent =
+    item.text;
+
+  const feedback = document.getElementById("feedback");
+
+  feedback.className = "feedback hidden";
+  feedback.textContent = "";
+
+  document.getElementById("next")
+    .classList.add("hidden");
+
+  document.querySelectorAll(".option")
+    .forEach(button => {
+
+      button.disabled = false;
+
+      button.classList.remove(
+        "correct",
+        "wrong"
+      );
+
+    });
+}
+
+/* ตรวจคำตอบ */
+
+function choose(answer) {
+
+  if (answered) return;
+
+  answered = true;
+
+  const item = quiz[idx];
+
+  const correct = answer === item.sentence;
+
+  if (correct) {
+    score += 10;
+  }
+
+  const buttons = document.querySelectorAll(".option");
+
+  buttons.forEach((button, i) => {
+
+    const value = i === 0;
+
+    button.disabled = true;
+
+    if (value === item.sentence) {
+      button.classList.add("correct");
+    }
+
+    else if (value === answer) {
+      button.classList.add("wrong");
+    }
+
+  });
+
+  const feedback = document.getElementById("feedback");
+
+  feedback.className =
+    "feedback" + (correct ? "" : " bad");
+
+  let message = "";
+
+  if (correct) {
+    message = "✅ ถูกต้อง เก่งมาก! ";
+  } else {
+    message = "💡 ยังไม่ถูกนะ ";
+  }
+
+  if (item.sentence) {
+    message += "ข้อความนี้เป็นประโยค เพราะ";
+  } else {
+    message += "ข้อความนี้ไม่เป็นประโยค เพราะ";
+  }
+
+  message += item.why;
+
+  feedback.textContent = message;
+
+  document.getElementById("points").textContent =
+    `⭐ ${score} คะแนน`;
+
+  document.getElementById("bar").style.width =
+    `${(idx + 1) / quiz.length * 100}%`;
+
+  const nextButton = document.getElementById("next");
+
+  nextButton.classList.remove("hidden");
+
+  if (idx === quiz.length - 1) {
+    nextButton.textContent = "ดูคะแนนรวม 🏆";
+  } else {
+    nextButton.textContent = "ข้อต่อไป ➜";
+  }
+}
+
+/* ไปข้อถัดไป */
+
+function advance() {
+
+  idx++;
+
+  if (idx < quiz.length) {
+
+    render();
+
+    return;
+  }
+
+  finish();
+}
+
+/* สรุปคะแนน */
+
+function finish() {
+
+  const fullScore = quiz.length * 10;
+
+  document.getElementById("finalScore").textContent =
+    `${score} / ${fullScore}`;
+
+  let title = "";
+  let message = "";
+
+  if (score === fullScore) {
+
+    title = "สุดยอด! เต็มคะแนน 🎉";
+
+    message =
+      "ตอบถูกครบทุกข้อแล้ว เก่งมากค่ะ!";
+
+  }
+
+  else if (score >= 40) {
+
+    title = "เก่งมากเลย! 🌟";
+
+    message =
+      "ทำได้ดีมาก ลองเล่นอีกครั้งเพื่อเก็บคะแนนให้ครบ!";
+
+  }
+
+  else {
+
+    title = "ลองฝึกอีกครั้งนะ 💖";
+
+    message =
+      "กลับไปอ่านคำอธิบาย แล้วลองเล่นใหม่นะคะ";
+
+  }
+
+  document.getElementById("resultTitle").textContent =
+    title;
+
+  document.getElementById("resultMsg").textContent =
+    message;
+
+  show("result");
+}
+
+</script>
+
+</body>
+</html>
